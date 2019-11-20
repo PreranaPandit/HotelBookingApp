@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText etAdults, etChildren, etRoom;
     private Button btnCalculate;
 
+    TextView tvLocation, tvRoomType, tvInDate, tvOutDate, tvAdults, tvChildren, tvRoom, tvSErvice, tvTax, tvTotal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,20 @@ public class MainActivity extends AppCompatActivity {
         etChildren = (EditText) findViewById(R.id.etChildren);
         etRoom = (EditText) findViewById(R.id.etRoom);
         btnCalculate = (Button) findViewById(R.id.btnCalculate);
+
+        //scroll view outputs data binding
+
+        tvLocation = (TextView) findViewById(R.id.tvLocation);
+        tvRoomType = (TextView) findViewById(R.id.tvRoomType);
+        tvInDate = (TextView) findViewById(R.id.tvInDate);
+        tvOutDate = (TextView) findViewById(R.id.tvOutDate);
+        tvAdults = (TextView) findViewById(R.id.tvAdults);
+        tvChildren = (TextView) findViewById(R.id.tvChildren);
+        tvRoom = (TextView) findViewById(R.id.tvRoom);
+        tvSErvice = (TextView) findViewById(R.id.tvService);
+        tvTax = (TextView) findViewById(R.id.tvTax);
+        tvTotal = (TextView) findViewById(R.id.tvTotal);
+
 
         //passing an array to the location in spinner
         String location[] = {"Bhaktapur","Pokhara","Chitwan"};
@@ -84,6 +100,16 @@ public class MainActivity extends AppCompatActivity {
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                tvLocation.setText("Location : "+spinLocation.getSelectedItem().toString());
+                tvRoomType.setText("Room Type : "+spinRoomType.getSelectedItem().toString());
+                tvInDate.setText(tvCheckInDate.getText().toString());
+                tvOutDate.setText(tvCheckOutDate.getText().toString());
+                tvAdults.setText("Number of Adults : "+etAdults.getText().toString());
+                tvChildren.setText("NUmber of Children : "+etChildren.getText().toString());
+                tvRoom.setText("NUmber of Rooms : "+etRoom.getText().toString());
+
+                
 
             }
         });
