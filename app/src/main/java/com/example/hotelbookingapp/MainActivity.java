@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,8 +15,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         tvTax = (TextView) findViewById(R.id.tvTax);
         tvTotal = (TextView) findViewById(R.id.tvTotal);
 
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
 
         //passing an array to the location in spinner
         String location[] = {"Bhaktapur","Pokhara","Chitwan"};
@@ -109,8 +117,10 @@ public class MainActivity extends AppCompatActivity {
                 tvChildren.setText("NUmber of Children : "+etChildren.getText().toString());
                 tvRoom.setText("NUmber of Rooms : "+etRoom.getText().toString());
 
-                
+                String dateIn = tvCheckInDate.getText().toString();
+                String dateOUt = tvCheckOutDate.getText().toString();
 
+               
             }
         });
 
@@ -129,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = "CheckIn Date : " +year +"/"+month+"/"+dayOfMonth;
+                String date = year +"/"+month+"/"+dayOfMonth;
                 tvCheckInDate.setText(date);
             }
         },year,month,day);
@@ -146,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = "CheckOut Date : " +year +"/"+month+"/"+dayOfMonth;
+                String date = year +"/"+month+"/"+dayOfMonth;
                 tvCheckOutDate.setText(date);
             }
         },year,month,day);
@@ -154,5 +164,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    }
+
+
+}
 
