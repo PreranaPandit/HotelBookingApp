@@ -119,6 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="2"
+            android:id="@+id/etAdults"
             android:textAlignment="center"
             />
 
@@ -127,6 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAlignment="center"
+            android:id="@+id/etChildren"
             android:hint="1"
             />
 
@@ -135,12 +137,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="1"
+            android:id="@+id/etRoom"
             android:textAlignment="center"
             />
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnCalculate"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="52dp"
@@ -149,8 +153,8 @@
         android:text="CALCULATE"
         android:textAlignment="center"
         android:textSize="25dp"
-
         />
+
 
 
 </LinearLayout>
