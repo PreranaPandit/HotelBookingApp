@@ -51,26 +51,19 @@
         android:id="@+id/spinRoomType"
         />
 
-    <TextView
-        android:id="@+id/tvCheckInDate"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/simpledatepicker1"
         android:layout_width="match_parent"
-        android:hint="Check In Date"
-        android:textSize="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        android:textStyle="bold"
-        />
+        android:layout_height="wrap_content"
+        android:text="Check In date" />
 
-    <TextView
-        android:id="@+id/tvCheckOutDate"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/simpledatepicker2"
         android:layout_width="match_parent"
-        android:hint="Check Out Date"
-        android:textSize="20dp"
-        android:layout_marginLeft="20dp"
-        android:textStyle="bold"
-        />
+        android:layout_height="wrap_content"
+        android:text="check out date" />
+
+
 
 
     <LinearLayout
@@ -146,13 +139,18 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tverror"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="25dp" />
+
     <Button
         android:id="@+id/btnCalculate"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_marginTop="52dp"
-        android:layout_marginLeft="92dp"
-        android:layout_marginRight="92dp"
+
         android:text="CALCULATE"
         android:textAlignment="center"
         android:textSize="25dp"
@@ -181,17 +179,17 @@
             android:id="@+id/tvRoomType"
             />
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:id="@+id/tvInDate"
-            />
+            <TextView
+                android:id="@+id/tvindate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:id="@+id/tvOutDate"
-            />
+            <TextView
+                android:id="@+id/tvoutdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                 />
 
         <TextView
             android:layout_height="wrap_content"
@@ -211,6 +209,18 @@
             android:id="@+id/tvRoom"
             />
 
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/tvDays"
+                />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/tvTotal"
+                />
+
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
@@ -223,11 +233,7 @@
             android:id="@+id/tvTax"
             />
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:id="@+id/tvTotal"
-            />
+
 
         </LinearLayout>
 

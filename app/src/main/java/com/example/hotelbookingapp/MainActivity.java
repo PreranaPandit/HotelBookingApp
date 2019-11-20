@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -21,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -29,12 +32,17 @@ public class MainActivity extends AppCompatActivity {
     //Referencing
     private Spinner spinLocation;
     private Spinner spinRoomType;
-    private TextView tvCheckInDate;
-    private TextView tvCheckOutDate;
     private EditText etAdults, etChildren, etRoom;
     private Button btnCalculate;
 
-    TextView tvLocation, tvRoomType, tvInDate, tvOutDate, tvAdults, tvChildren, tvRoom, tvSErvice, tvTax, tvTotal;
+    TextView tvindate, tvoutdate;
+    Button simpledatepicker1, simpledatepicker2;
+    TextView tvDays, tvError, tvLocation, tvRoomType, tvInDate, tvOutDate, tvAdults, tvChildren, tvRoom, tvSErvice, tvTax, tvTotal;
+
+    int year2, year3;
+    int month2, month3;
+    int day2, day3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +52,20 @@ public class MainActivity extends AppCompatActivity {
         //Binding
         spinLocation = (Spinner) findViewById(R.id.spinLocation);
         spinRoomType = (Spinner) findViewById(R.id.spinRoomType);
-        tvCheckInDate = (TextView) findViewById(R.id.tvCheckInDate);
-        tvCheckOutDate = (TextView) findViewById(R.id.tvCheckOutDate);
         etAdults = (EditText) findViewById(R.id.etAdults);
         etChildren = (EditText) findViewById(R.id.etChildren);
         etRoom = (EditText) findViewById(R.id.etRoom);
         btnCalculate = (Button) findViewById(R.id.btnCalculate);
-
+        tvError = (TextView) findViewById(R.id.tverror);
+        tvindate = findViewById(R.id.tvindate);
+        tvoutdate = findViewById(R.id.tvoutdate);
+        simpledatepicker1 = findViewById(R.id.simpledatepicker1);
+        simpledatepicker2 = findViewById(R.id.simpledatepicker2);
         //scroll view outputs data binding
-
+        tvDays = (TextView) findViewById(R.id.tvDays);
         tvLocation = (TextView) findViewById(R.id.tvLocation);
         tvRoomType = (TextView) findViewById(R.id.tvRoomType);
-        tvInDate = (TextView) findViewById(R.id.tvInDate);
-        tvOutDate = (TextView) findViewById(R.id.tvOutDate);
+
         tvAdults = (TextView) findViewById(R.id.tvAdults);
         tvChildren = (TextView) findViewById(R.id.tvChildren);
         tvRoom = (TextView) findViewById(R.id.tvRoom);
@@ -67,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
 
         //passing an array to the location in spinner
-        String location[] = {"Bhaktapur","Pokhara","Chitwan"};
+        String location[] = {"Bhaktapur", "Pokhara", "Chitwan"};
         ArrayAdapter adapter = new ArrayAdapter<>
                 (
                         this,
@@ -76,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         spinLocation.setAdapter(adapter);
 
         //passing an array to the room type in spinner
-        String roomType[] = {"Deluxe","AC","Platinum"};
+        String roomType[] = {"Deluxe", "AC", "Platinum"};
         ArrayAdapter adapterRoom = new ArrayAdapter<>
                 (
                         this,
@@ -84,21 +93,64 @@ public class MainActivity extends AppCompatActivity {
                 );
         spinRoomType.setAdapter(adapterRoom);
 
-        //setting OnClick Listener on check in date
-        tvCheckInDate.setOnClickListener(new View.OnClickListener() {
+        simpledatepicker1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            loadCalendar();
+                loadCalendar1();
             }
         });
 
-        //setting Onclick listener on check out date
-        tvCheckOutDate.setOnClickListener(new View.OnClickListener() {
+
+        simpledatepicker2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             loadCheckOutCalendar();
+                loadCalendar2();
+
             }
         });
+
+    }
+    private void loadCalendar2() {
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        final int day = c.get(Calendar.DAY_OF_MONTH);
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = "Checked Out At::" + month + "/" + dayOfMonth + "/" + year;
+                month3 = month;
+                day3 = dayOfMonth;
+                year3 = year;
+                tvoutdate.setText(date);
+            }
+
+        }, year, month, day);
+        datePickerDialog.show();
+    }
+
+
+    private void loadCalendar1() {
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        final int day = c.get(Calendar.DAY_OF_MONTH);
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = "Checked In At::" + month + "/" + dayOfMonth + "/" + year;
+                month2 = month;
+                day2 = dayOfMonth;
+                year2 = year;
+                tvindate.setText(date);
+            }
+
+        }, year, month, day);
+        datePickerDialog.show();
 
 
         //button mode
@@ -109,18 +161,99 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if (TextUtils.isEmpty(tvindate.getText())) {
+                    tvError.setText("Please enter check in Date ");
+                    return;
+                }
+                else if (TextUtils.isEmpty(tvoutdate.getText())) {
+                    tvError.setText("Please enter checked out date ");
+                    return;
+                }
+
+
                 tvLocation.setText("Location : "+spinLocation.getSelectedItem().toString());
                 tvRoomType.setText("Room Type : "+spinRoomType.getSelectedItem().toString());
-                tvInDate.setText(tvCheckInDate.getText().toString());
-                tvOutDate.setText(tvCheckOutDate.getText().toString());
+
                 tvAdults.setText("Number of Adults : "+etAdults.getText().toString());
-                tvChildren.setText("NUmber of Children : "+etChildren.getText().toString());
-                tvRoom.setText("NUmber of Rooms : "+etRoom.getText().toString());
+                tvChildren.setText("Number of Children : "+etChildren.getText().toString());
+                tvRoom.setText("Number of Rooms : "+etRoom.getText().toString());
 
-                String dateIn = tvCheckInDate.getText().toString();
-                String dateOUt = tvCheckOutDate.getText().toString();
+                //Dates conversion for number of days
+                Calendar cal1 = Calendar.getInstance();
+                Calendar cal2 = Calendar.getInstance();
+                cal1.set(year2, month2, day2);
+                cal2.set(year3, month3, day3);
+                long millis1 = cal1.getTimeInMillis();
+                long millis2 = cal2.getTimeInMillis();
+                long diff = millis2 - millis1;
+                long diffDays = (diff / (86400000));
 
-               
+                //Calculation part
+                int  numRoom = Integer.parseInt(etRoom.getText().toString());
+                double price;
+                double TotalPrice;
+                double ServiceCharge;
+                double GrandTotal;
+
+
+                String roomType = spinRoomType.getSelectedItem().toString();
+
+                if (roomType == "Deluxe") {
+                       //Room Price Per Night:"+"2000
+                    price = 2000;
+                    TotalPrice = price * numRoom * diffDays;
+                    ServiceCharge = ((0.10) * TotalPrice) +TotalPrice;
+                    GrandTotal = ((0.13) * ServiceCharge) + ServiceCharge;
+
+                    tvDays.setText("Stayed Days : "+ diffDays);
+                    tvRoom.setText(("Rooms booked : "+ numRoom));
+                    tvTotal.setText("Total : "+TotalPrice);
+                    tvSErvice.setText("Price after service charge : "+ServiceCharge);
+                    tvTax.setText("Price after tax inclusion : "+GrandTotal);
+
+
+                    Toast.makeText(MainActivity.this, "Total cost : " + GrandTotal, Toast.LENGTH_SHORT).show();
+
+
+                } else if (roomType == "AC") {
+
+                    price = 3000;
+                    TotalPrice = price * numRoom * diffDays;
+                    ServiceCharge = ((0.10) * TotalPrice) +TotalPrice;
+                    GrandTotal = ((0.13) * ServiceCharge) + ServiceCharge;
+
+                    tvDays.setText("Stayed Days : "+ diffDays);
+                    tvRoom.setText(("Rooms booked : "+ numRoom));
+                    tvTotal.setText("Total : "+TotalPrice);
+                    tvSErvice.setText("Price after service charge : "+ServiceCharge);
+                    tvTax.setText("Price after tax inclusion : "+GrandTotal);
+
+
+                    Toast.makeText(MainActivity.this, "Total cost : " + GrandTotal, Toast.LENGTH_SHORT).show();
+
+                } else if (roomType == "Platinum") {
+                    price = 4000;
+
+                    TotalPrice = price * numRoom * diffDays;
+                    ServiceCharge = ((0.10) * TotalPrice) +TotalPrice;
+                    GrandTotal = ((0.13) * ServiceCharge) + ServiceCharge;
+
+                    tvDays.setText("Stayed Days : "+ diffDays);
+                    tvRoom.setText(("Rooms booked : "+ numRoom));
+                    tvTotal.setText("Total : "+TotalPrice);
+                    tvSErvice.setText("Price after service charge : "+ServiceCharge);
+                    tvTax.setText("Price after tax inclusion : "+GrandTotal);
+
+
+                    Toast.makeText(MainActivity.this, "Total cost : " + GrandTotal, Toast.LENGTH_SHORT).show();
+
+                }
+
+
+
+
+
+
             }
         });
 
@@ -129,39 +262,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void loadCalendar()
-    {
-        final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = year +"/"+month+"/"+dayOfMonth;
-                tvCheckInDate.setText(date);
-            }
-        },year,month,day);
-        datePickerDialog.show();
-    }
-
-    private void loadCheckOutCalendar()
-    {
-        final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = year +"/"+month+"/"+dayOfMonth;
-                tvCheckOutDate.setText(date);
-            }
-        },year,month,day);
-        datePickerDialog.show();
-    }
 
 
 
