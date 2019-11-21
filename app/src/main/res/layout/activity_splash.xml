@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/hotel"
+    tools:context=".SplashActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:paddingBottom="80dp"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_width="60dp"
+            android:layout_height="63dp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="WELCOME TO HOTEL BOOKING"
+            android:textAlignment="center"
+            android:textSize="30dp"
+            android:paddingBottom="2dp"
+            android:textStyle="bold"
+            android:textColor="#090000"
+            android:fontFamily="sans-serif-medium"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please wait"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textAlignment="center"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#130404"
+            />
+
+    </LinearLayout>
+</LinearLayout>

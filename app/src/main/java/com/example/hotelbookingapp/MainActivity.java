@@ -6,13 +6,17 @@ import androidx.fragment.app.DialogFragment;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +34,10 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
 
     //Referencing
+
+    private TextView tvHotel;
+
+
     private Spinner spinLocation;
     private Spinner spinRoomType;
     private EditText etAdults, etChildren, etRoom;
@@ -39,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     Button simpledatepicker1, simpledatepicker2;
     TextView tvDays, tvError, tvLocation, tvRoomType, tvInDate, tvOutDate, tvAdults, tvChildren, tvRoom, tvSErvice, tvTax, tvTotal;
 
+
+
+
     int year2, year3;
     int month2, month3;
     int day2, day3;
@@ -47,8 +58,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //for full screen and hiding title bar from the window
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getSupportActionBar().hide();
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
+        //progressBar = findViewById(R.id.ProgressBar);
+        tvHotel = findViewById(R.id.tvHotelBook);
         //Binding
         spinLocation = (Spinner) findViewById(R.id.spinLocation);
         spinRoomType = (Spinner) findViewById(R.id.spinRoomType);
@@ -73,9 +92,11 @@ public class MainActivity extends AppCompatActivity {
         tvTax = (TextView) findViewById(R.id.tvTax);
         tvTotal = (TextView) findViewById(R.id.tvTotal);
 
+
+
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
 
-        //passing an array to the location in spinner
+//passing an array to the room type in spinner
         String location[] = {"Bhaktapur", "Pokhara", "Chitwan"};
         ArrayAdapter adapter = new ArrayAdapter<>
                 (
@@ -88,8 +109,7 @@ public class MainActivity extends AppCompatActivity {
         String roomType[] = {"Deluxe", "AC", "Platinum"};
         ArrayAdapter adapterRoom = new ArrayAdapter<>
                 (
-                        this,
-                        android.R.layout.simple_list_item_1, roomType
+                        this,android.R.layout.select_dialog_singlechoice, roomType
                 );
         spinRoomType.setAdapter(adapterRoom);
 
@@ -161,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                //validations for widgets
                 if (TextUtils.isEmpty(tvindate.getText())) {
                     tvError.setText("Please enter check in Date ");
                     return;
@@ -169,7 +190,21 @@ public class MainActivity extends AppCompatActivity {
                     tvError.setText("Please enter checked out date ");
                     return;
                 }
-
+                else if(TextUtils.isEmpty(etAdults.getText()))
+                {
+                    etAdults.setError("Enter number of adults");
+                    return;
+                }
+                else if(TextUtils.isEmpty(etChildren.getText()))
+                {
+                    etChildren.setError("Enter number of children");
+                    return;
+                }
+                else if(TextUtils.isEmpty(etRoom.getText()))
+                {
+                    etRoom.setError("Enter number of rooms");
+                    return;
+                }
 
                 tvLocation.setText("Location : "+spinLocation.getSelectedItem().toString());
                 tvRoomType.setText("Room Type : "+spinRoomType.getSelectedItem().toString());
@@ -256,7 +291,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
 
     }
