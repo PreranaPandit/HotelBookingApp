@@ -22,7 +22,7 @@
                    - Platinum (400/day)
 - **Button** : CheckIn Date, CheckOut Date and Calculate
 
-- [X] LINEAR LAYOUT : HORIZONTAL ORIENTATION
+- [x] LINEAR LAYOUT : HORIZONTAL ORIENTATION
 
 - **TextView** : Number of Adults, Children and Rooms
 - **Edit Text** : Number of Adults, Children and Rooms
