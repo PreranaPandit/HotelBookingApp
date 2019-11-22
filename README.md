@@ -12,14 +12,14 @@
 
 - **Scroll Views** : Activity Pages
 - **Spinners** : Location and Room Type
-               - **Location**
-                   - Bhaktapur
-                   - Pokhara
-                   - Chitwan
-                - **Room Type**
-                   - Deluxe (2000/day)
-                   - AC (300/day)
-                   - Platinum (400/day)
+- **Location**
+ - Bhaktapur
+ - Pokhara
+ - Chitwan
+- **Room Type**
+ - Deluxe (2000/day)
+ - AC (300/day)
+ - Platinum (400/day)
 - **Button** : CheckIn Date, CheckOut Date and Calculate
 
 - [x] LINEAR LAYOUT : HORIZONTAL ORIENTATION
@@ -27,20 +27,20 @@
 - **TextView** : Number of Adults, Children and Rooms
 - **Edit Text** : Number of Adults, Children and Rooms
 
--[X] LINEAR LAYOUT : VERTICAL ORIENTATION
+- [x] LINEAR LAYOUT : VERTICAL ORIENTATION
 
 - **Text Views** : Outputs are clicking on *CALCULATE BUTTON*
-           - Location
-           - Room Type
-           - Checked In Date
-           - Checked Out Date
-           - Number of Adults
-           - Number of Children 
-           - Number of booked rooms
-           - Stayed Days
-           - Total Cost
-           - Cost after **10% service charge**
-           - Cost after **13% TAX**
+ - Location
+ - Room Type
+ - Checked In Date
+ - Checked Out Date
+ - Number of Adults
+ - Number of Children 
+ - Number of booked rooms
+ - Stayed Days
+ - Total Cost
+ - Cost after **10% service charge**
+ - Cost after **13% TAX**
            
 
 ## App Images
